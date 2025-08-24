@@ -13,7 +13,7 @@ const FooterChat = ({ setMessages, messages, socket, usuarioSeleccionado, setUsu
     const handleTyping = () => {
         socket.emit('typing', {
             user: localStorage.getItem('userName'),
-            text: `Está escribiendo...`
+            text: `Typing...`
         });
     };
 
@@ -69,15 +69,15 @@ const FooterChat = ({ setMessages, messages, socket, usuarioSeleccionado, setUsu
                     <InputGroup className="message m-0">
                         <InputGroup.Text id="basic-addon1">+</InputGroup.Text>
                         <Form.Control
-                            placeholder="Mensaje a enviar"
-                            aria-label="Mensaje"
+                            placeholder="Message"
+                            aria-label="Message"
                             aria-describedby="basic-addon1" 
                             value={inputMessage}
                             onChange={(e) => setInputMessage(e.target.value)}
                             onKeyDown={handleTyping}
                         />
                     </InputGroup>
-                    <Button variant="success" className='sendBtn' type='submit'>Enviar</Button>
+                    <Button variant="success" className='sendBtn' type='submit'>Send</Button>
                 </form>
             )
         }

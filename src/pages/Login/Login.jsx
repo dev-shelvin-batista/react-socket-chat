@@ -48,15 +48,15 @@ export const Login = ({ socket }) => {
               <Card style={{ width: '100%' }}>
                 <Card.Body>
                   <Card.Header>
-                    <Card.Title>Ingresar al Chat</Card.Title>
+                    <Card.Title>Enter the chat</Card.Title>
                   </Card.Header>
                   
                   <Card.Text>
                     <InputGroup className="mb-3 mt-4">
                       <InputGroup.Text id="basic-addon1">*</InputGroup.Text>
                       <Form.Control
-                        placeholder="Ingresar un nick de usuario"
-                        aria-label="Usuario"
+                        placeholder="Enter a username"
+                        aria-label="User"
                         aria-describedby="basic-addon1"
                         value={userName}
                         onChange={(e) => setUserName(e.target.value)}
@@ -65,7 +65,7 @@ export const Login = ({ socket }) => {
           
                   </Card.Text>
                   <Card.Footer className="text-end">
-                    <Button variant="primary" type='submit'>Ingresar</Button>
+                    <Button variant="primary" type='submit'>Enter</Button>
                   </Card.Footer>
                   
                 </Card.Body>

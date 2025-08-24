@@ -33,7 +33,7 @@ const MensajesChat = ({ messages, socket, usuarioSeleccionado, setUsuarioSelecci
             {messages.map((item, index) =>
           item.sender === localStorage.getItem('userName') ? (
                 <div className="message__chats text-sm-end" key={index}>
-                    <p className='p-0 m-0'><Badge bg="light" text="dark">Usted</Badge></p>
+                    <p className='p-0 m-0'><Badge bg="light" text="dark">You</Badge></p>
                     <div className="message__sender">
                         <p className='p-0 m-0 text-start'>{ item.text }</p>
                         <p className='p-0 m-0 text-end'><Badge bg="light" text="dark">{ item.date }</Badge></p>
@@ -62,7 +62,7 @@ const MensajesChat = ({ messages, socket, usuarioSeleccionado, setUsuarioSelecci
     return (
         <>
             <header className="chat__mainHeader text-end m-0 p-1">
-                <Button variant="danger" onClick={(event) => salirChat()}>Salir</Button>
+                <Button variant="danger" onClick={(event) => salirChat()}>Exit</Button>
             </header>
             <div className="message__container">
                 {renderMensajes()}
