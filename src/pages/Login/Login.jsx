@@ -11,7 +11,6 @@ export const Login = ({ socket }) => {
   const [userName, setUserName] = useState('');
 
   useEffect(() => { 
-    //localStorage.removeItem('listado_usuarios');
     validarUsuario();    
   }, [socket]);
 

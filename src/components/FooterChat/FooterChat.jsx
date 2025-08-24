@@ -67,10 +67,10 @@ const FooterChat = ({ setMessages, messages, socket, usuarioSeleccionado, setUsu
                 <form className="form" onSubmit={enviarMensaje}>
                    
                     <InputGroup className="message m-0">
-                        <InputGroup.Text id="basic-addon1">+</InputGroup.Text>
+                        <InputGroup.Text id="basic-addon1">*</InputGroup.Text>
                         <Form.Control
-                            placeholder="Message"
-                            aria-label="Message"
+                            placeholder="Message..."
+                            aria-label="Message..."
                             aria-describedby="basic-addon1" 
                             value={inputMessage}
                             onChange={(e) => setInputMessage(e.target.value)}
