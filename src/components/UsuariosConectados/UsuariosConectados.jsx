@@ -100,7 +100,7 @@ const UsuariosConectados = ({ users, setUsers, setMessages, messages, socket, us
     }
     return (
         <div className="chat__sidebar">
-            <h3 className='m-2'>Chat</h3>
+            <h3 className='m-2'>Chat Example</h3>
 
             <ListGroup>
                 {users.map((row, index) => (
