@@ -1,6 +1,10 @@
 # Project details
 
-- React 18.2.0
+|                |Version							|
+|----------------|-------------------------------|
+|React|`18.2.0`            |
+|NPM          |`11.5.2`            |
+|Node.js          |`22.14.0`|
 
 ## Instructions
 
