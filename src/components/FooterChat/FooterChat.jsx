@@ -4,25 +4,25 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import React, { useState } from 'react';
 
-const FooterChat = ({ setMessages, messages, socket, usuarioSeleccionado, setUsuarioSeleccionado}) => {
+const FooterChat = ({ setMessages, messages, socket, userSelected, setUserSelected}) => {
     const [inputMessage, setInputMessage] = useState('');
 
     /**
-     * Metodo para notificar a los demas cuando un usuario esta escribirnso
+     * Method for notifying others when a user is typing
      */
     const handleTyping = () => {
         socket.emit('typing', {
-            user: localStorage.getItem('userName'),
+            user: localStorage.getItem('userNameReact'),
             text: `Typing...`
         });
     };
 
     /**
-     * Metodo para notificar un nuevo mensaje
+     * Method for notifying a new message
      * 
-     * @param e Evento del formulario
+     * @param e Form event
      */
-    const enviarMensaje = (e) => {
+    const sendMessage = (e) => {
         e.preventDefault();
         if(inputMessage.trim() != ""){
             let obj_message = {};
@@ -34,19 +34,19 @@ const FooterChat = ({ setMessages, messages, socket, usuarioSeleccionado, setUsu
             let minute = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
             let currentDate = `${year}-${month}-${day} ${hour}:${minute}`;
 
-            let listado_usuarios = localStorage.getItem("listado_usuarios") || "[]";
-            listado_usuarios = JSON.parse(listado_usuarios);
-            const user = listado_usuarios.find((user) => user.socketID === usuarioSeleccionado);
+            let list_users = localStorage.getItem("list_usersReact") || "[]";
+            list_users = JSON.parse(list_users);
+            const user = list_users.find((user) => user.socketID === userSelected);
 
             obj_message = {
                 text: inputMessage,
                 date: currentDate,
-                sender: localStorage.getItem('userName'),
-                to: usuarioSeleccionado
+                sender: localStorage.getItem('userNameReact'),
+                to: userSelected
             }
 
             user.messages.push(obj_message)
-            localStorage.setItem('listado_usuarios', JSON.stringify(listado_usuarios)); 
+            localStorage.setItem('list_usersReact', JSON.stringify(list_users)); 
 
             
             messages.push(obj_message)
@@ -59,12 +59,12 @@ const FooterChat = ({ setMessages, messages, socket, usuarioSeleccionado, setUsu
     }
 
     /**
-     * Metodo para generar los mensajes de chat de un usuario seleccionado
+     * Method for generating chat messages for a selected user
      */
-    const renderFormulario = () => {
-        if(usuarioSeleccionado != "") {
+    const renderForm = () => {
+        if(userSelected != "") {
             return (
-                <form className="form" onSubmit={enviarMensaje}>
+                <form className="form" onSubmit={sendMessage}>
                    
                     <InputGroup className="message m-0">
                         <InputGroup.Text id="basic-addon1">*</InputGroup.Text>
@@ -86,7 +86,7 @@ const FooterChat = ({ setMessages, messages, socket, usuarioSeleccionado, setUsu
     return (
         <>
             <div className="chat__footer p-0">
-                {renderFormulario()}
+                {renderForm()}
             </div>
         </>
     )
