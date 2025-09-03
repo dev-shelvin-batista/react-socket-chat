@@ -10,7 +10,7 @@ const socket = io("http://localhost:4000");
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <Routes>
         <Route path="/" element={<Navigate to="chat/login"/>} />
         <Route path="*" element={<Navigate to="chat/login"/>} />
