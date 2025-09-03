@@ -10,7 +10,7 @@
 
 To run the frontend project, follow these steps:
 
-- Clone the project, either with the command git clone `https://github.com/dev-shelvin-batista/react-socket-chat` or using a GitHub graphical tool.
+- Clone the project, either with the command git clone `https://github.com/dev-shelvin-batista/react-socket-chat.git` or using a GitHub graphical tool.
 
 - After cloning the repository, install the node dependencies using the command `npm install` inside the `react-socket-chat` project folder. If an error occurs, add the --force option.
 
