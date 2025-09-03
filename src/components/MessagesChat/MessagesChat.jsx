@@ -1,22 +1,26 @@
-import './MensajesChat.css';
+import './MessagesChat.css';
 import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Badge from 'react-bootstrap/Badge';
 import { useNavigate } from 'react-router-dom';
 
-const MensajesChat = ({ messages, socket, usuarioSeleccionado, setUsuarioSeleccionado, lastMessageRef }) => {
+const MessagesChat = ({ messages, socket, userSelected, setUserSelected, lastMessageRef }) => {
     const navigate = useNavigate();
     const [typingStatus, setTypingStatus] = useState('');
 
-    const salirChat = () => {
-        socket.emit('disconnectUser', { userName: localStorage.getItem("userName"), socketID: localStorage.getItem("userName") });
-        localStorage.removeItem('userName');
+    /**
+     * Method for logging out and exiting the chat
+     */
+    const LogOut = () => {
+        socket.emit('disconnectUser', { userName: localStorage.getItem("userNameReact"), socketID: localStorage.getItem("userNameReact") });
+        localStorage.removeItem('userNameReact');
         navigate('/chat/login');
     }
 
-    useEffect( () => {        
+    useEffect( () => {
+        // Socket event to show that a user is typing
         socket.on('typingResponse', (data) => {
-            if(localStorage.getItem("usuarioSeleccionado") == data.user){
+            if(localStorage.getItem("userSelectedReact") == data.user){
                 setTypingStatus(data.text);
             }
             setTimeout(() => {
@@ -25,13 +29,17 @@ const MensajesChat = ({ messages, socket, usuarioSeleccionado, setUsuarioSelecci
         });
     }, []);
 
-    const renderMensajes = () => {
-        
-        if(usuarioSeleccionado != ""){
+    /**
+     * 
+     * Render chat message design with a user
+     * @returns Chat design
+     */
+    const renderMessages = () => {        
+        if(userSelected != ""){
             return (
             <>
             {messages.map((item, index) =>
-          item.sender === localStorage.getItem('userName') ? (
+          item.sender === localStorage.getItem('userNameReact') ? (
                 <div className="message__chats text-sm-end" key={index}>
                     <p className='p-0 m-0'><Badge bg="light" text="dark">You</Badge></p>
                     <div className="message__sender">
@@ -55,17 +63,16 @@ const MensajesChat = ({ messages, socket, usuarioSeleccionado, setUsuarioSelecci
                 </div>
                 
             </>)
-        }
-        
+        }        
     }
 
     return (
         <>
             <header className="chat__mainHeader text-end m-0 p-1">
-                <Button variant="danger" onClick={(event) => salirChat()}>Exit</Button>
+                <Button variant="danger" onClick={(event) => LogOut()}>Exit</Button>
             </header>
             <div className="message__container">
-                {renderMensajes()}
+                {renderMessages()}
                 
                 <div ref={lastMessageRef} />   
             </div>
@@ -74,4 +81,4 @@ const MensajesChat = ({ messages, socket, usuarioSeleccionado, setUsuarioSelecci
         </>
     )
 };
-export default MensajesChat;
+export default MessagesChat;

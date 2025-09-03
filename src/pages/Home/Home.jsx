@@ -1,58 +1,60 @@
 import './Home.css';
 import React, { useEffect, useState, useRef } from 'react';
-import UsuariosConectados from '../../components/UsuariosConectados/UsuariosConectados';
-import MensajesChat from '../../components/MensajesChat/MensajesChat';
 import FooterChat from '../../components/FooterChat/FooterChat';
 import { useNavigate } from 'react-router-dom';
+import UsersOnline from '../../components/UsersOnline/UsersOnline';
+import MessagesChat from '../../components/MessagesChat/MessagesChat';
 
 export const Home = ({ socket }) => {
   const navigate = useNavigate();
-  const [usuarioSeleccionado, setUsuarioSeleccionado] = useState('');
+  const [userSelected, setUserSelected] = useState('');
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
   const lastMessageRef = useRef(null);
 
   /**
-   * metodo para modificar la variable del usuario seleccionado y asi mostrar el chat
+   * Method to modify the selected user variable and thus display the chat
    * 
-   * @param usuario usuario a actualizar 
+   * @param user User to be updated
    */
-  const onChangeUsuario = (usuario) => {
-    setUsuarioSeleccionado(usuario);
+  const onChangeUser = (user) => {
+    setUserSelected(user);
   };
 
   /**
-   * Metodo para generar los mensajes del usuario seleccionado
+   * Method for generating messages for the selected user
    */
-  const generarmensajes = () => {    
-    let listado_usuarios = localStorage.getItem("listado_usuarios") || "[]";
-    listado_usuarios = JSON.parse(listado_usuarios);
+  const generateMessages = () => {    
+    let list_users = localStorage.getItem("list_usersReact") || "[]";
+    list_users = JSON.parse(list_users);
     
-    listado_usuarios.map((item) => {
-      if (item.socketID == localStorage.getItem("userName")) {        
+    list_users.map((item) => {
+      if (item.socketID == localStorage.getItem("userNameReact")) {        
         setMessages([...item.messages])
       }
     });
   }
+
   useEffect(() => {
     // 👇️ scroll to bottom every time messages change
     lastMessageRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
   
   useEffect(() => { 
-    localStorage.setItem('usuarioSeleccionado', "");
+    localStorage.setItem('userSelectedReact', "");
 
-    validarUsuario();
-    generarmensajes();
+    validateUser();
+    generateMessages();
 
-    socket.on(`messageResponse-${localStorage.getItem("userName")}`, (data) => {
-      let listado_usuarios = localStorage.getItem("listado_usuarios") || "[]";
-      listado_usuarios = JSON.parse(listado_usuarios);
+    // Socket event to receive messages from other users
+    socket.on(`messageResponse-${localStorage.getItem("userNameReact")}`, (data) => {
+      let list_users = localStorage.getItem("list_usersReact") || "[]";
+      list_users = JSON.parse(list_users);
       
-      const user = listado_usuarios.find((user) => user.socketID === data.sender);
+      const user = list_users.find((user) => user.socketID === data.sender);
 
-      if(localStorage.getItem("usuarioSeleccionado") === ""){
-        user.nuevos_mensajes += 1
+      if(localStorage.getItem("userSelectedReact") === ""){
+        user.new_messages += 1
       }
 
       user.messages.push({
@@ -63,16 +65,16 @@ export const Home = ({ socket }) => {
       });
       setMessages([...user.messages])
       
-      localStorage.setItem('listado_usuarios', JSON.stringify(listado_usuarios));   
-      setUsers(listado_usuarios);
+      localStorage.setItem('list_usersReact', JSON.stringify(list_users));   
+      setUsers(list_users);
     });
   }, [socket]);
 
   /**
-   * Metodo para validar si un usuario no tiene una sesion activa
+   * Method to validate whether a user does not have an active session
    */
-  const validarUsuario = () => {
-    if(!localStorage.getItem("userName")) {
+  const validateUser = () => {
+    if(!localStorage.getItem("userNameReact")) {
       navigate('/chat/login');
     }
   }
@@ -80,11 +82,11 @@ export const Home = ({ socket }) => {
   return (
     <>
       <div className="chat">
-        <UsuariosConectados users={users} setUsers={setUsers} setMessages={setMessages} messages={messages} socket={socket} usuarioSeleccionado={usuarioSeleccionado} setUsuarioSeleccionado={onChangeUsuario} />
+        <UsersOnline users={users} setUsers={setUsers} setMessages={setMessages} messages={messages} socket={socket} userSelected={userSelected} setUserSelected={onChangeUser} />
 
         <div className="chat__main">
-          <MensajesChat messages={messages} socket={socket} usuarioSeleccionado={usuarioSeleccionado} setUsuarioSeleccionado={onChangeUsuario} lastMessageRef={lastMessageRef} />
-          <FooterChat setMessages={setMessages} messages={messages} socket={socket} usuarioSeleccionado={usuarioSeleccionado} setUsuarioSeleccionado={onChangeUsuario} />
+          <MessagesChat messages={messages} socket={socket} userSelected={userSelected} setUserSelected={onChangeUser} lastMessageRef={lastMessageRef} />
+          <FooterChat setMessages={setMessages} messages={messages} socket={socket} userSelected={userSelected} setUserSelected={onChangeUser} />
         </div>        
       </div>
       

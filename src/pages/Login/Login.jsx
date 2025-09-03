@@ -11,25 +11,25 @@ export const Login = ({ socket }) => {
   const [userName, setUserName] = useState('');
 
   useEffect(() => { 
-    validarUsuario();    
+    validateUser();    
   }, [socket]);
 
   /**
-   * Metodo para validar si un usuario tiene una sesion activa
+   * Method to validate whether a user has an active session
    */
-  const validarUsuario = () => {
-    if(localStorage.getItem("userName")) {
+  const validateUser = () => {
+    if(localStorage.getItem("userNameReact")) {
       navigate('/chat/home');
     }
   }
 
   /**
-   * Metodo para iniciar sesion y notificar el usuario a los demas que esten en sesion
+   * Method for logging in and notifying other users who are logged in
    */
-  const ingresar = (e) => {
+  const login = (e) => {
     e.preventDefault();
     if(userName.trim() !== ""){
-      localStorage.setItem('userName', userName);
+      localStorage.setItem('userNameReact', userName);
       
       socket.emit('newUserLogin', { userName, socketID: userName, online: true}); 
       navigate('/chat/home');
@@ -43,7 +43,7 @@ export const Login = ({ socket }) => {
         <div className="row">
           <div className="col-2"></div>
           <div className="col-">
-            <form className="form" onSubmit={ingresar}>
+            <form className="form" onSubmit={login}>
               <Card style={{ width: '100%' }}>
                 <Card.Body>
                   <Card.Header>
