@@ -50,7 +50,7 @@ export const Login = ({ socket }) => {
                     <Card.Title>Enter the chat</Card.Title>
                   </Card.Header>
                   
-                  <Card.Text>
+                  <Card.Body>
                     <InputGroup className="mb-3 mt-4">
                       <InputGroup.Text id="basic-addon1">*</InputGroup.Text>
                       <Form.Control
@@ -62,7 +62,7 @@ export const Login = ({ socket }) => {
                       />
                     </InputGroup>
           
-                  </Card.Text>
+                    </Card.Body>
                   <Card.Footer className="text-end">
                     <Button variant="primary" type='submit'>Enter</Button>
                   </Card.Footer>
