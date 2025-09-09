@@ -1,5 +1,7 @@
 # Project details
 
+Application to generate a chat with React by connecting to socket private channels of a backend development project in NodeJS.
+
 |                |Version							|
 |----------------|-------------------------------|
 |React|`18.2.0`            |
