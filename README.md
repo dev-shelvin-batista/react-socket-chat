@@ -7,6 +7,7 @@ Application to generate a chat with React by connecting to socket private channe
 |React|`18.2.0`            |
 |NPM          |`11.5.2`            |
 |Node.js          |`22.14.0`|
+|Docker          ||
 
 ## Instructions
 
